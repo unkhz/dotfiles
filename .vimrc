@@ -116,6 +116,7 @@ set virtualedit=onemore				" move one column after eol
 set tabpagemax=256					" open unlimited number of tabs
 set selectmode=						" Same select with mouse and visual
 set statusline=%f\ %m\ %r\ %h\ %w\ %y\ %=<%b>\ <0x%B>\ %c,%l\ %P
+set mouse=a							" Enable scrolling with mouse/touchpad
 
 " }}}
 
