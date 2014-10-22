@@ -1,13 +1,27 @@
 #! /bin/bash
 
 dotfiles="$(dirname $0)"
+lnopts='-s'
 
-ln -s $dotfiles/.vimrc ~/.vimrc
-ln -s $dotfiles/.vim ~/.vim
-ln -s $dotfiles/.bashrc ~/.bashrc
-ln -s $dotfiles/.profile ~/.profile
-ln -s $dotfiles/.path ~/.path
-ln -s $dotfiles/.slate ~/.slate
+while getopts hf OPTION
+do
+  case $OPTION in
+    h) echo "Usage: install.sh"
+       echo "-f Remove existing files before linking"
+       exit 0
+       ;;
+    f) echo "Removing existing files before linking"
+       lnopts= '-fs'
+      ;;
+  esac
+done
+
+ln $lnopts $dotfiles/.vimrc ~
+ln $lnopts $dotfiles/.vim ~
+ln $lnopts $dotfiles/.bashrc ~
+ln $lnopts $dotfiles/.profile ~
+ln $lnopts $dotfiles/.path ~
+ln $lnopts $dotfiles/.slate ~
 
 if [ -f ~/.ssh/authorized_keys ]; then
   cat ~/.ssh/authorized_keys $dotfiles/.ssh/authorized_keys | uniq > ~/.ssh/authorized_keys
