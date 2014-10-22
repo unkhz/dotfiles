@@ -1,0 +1,6 @@
+{
+    "\UF729" = moveToBeginningOfLine:;
+    "\UF72B" = moveToEndOfLine:;
+    "$\UF729" = moveToBeginningOfParagraphAndModifySelection:;
+    "$\UF72B" = moveToEndOfParagraphAndModifySelection:;
+}
