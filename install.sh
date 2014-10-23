@@ -28,6 +28,13 @@ if [ -f ~/.ssh/authorized_keys ]; then
 fi
 
 if [ -d ~/Library ]; then
+  # Make fn-left and fn-right properly jump to start and end of line
+  mkdir -p ~/Library/KeyBindings
   cp -a $dotfiles/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/
+
+  # Add Fi-Unkhz programming layout
   cp -a $dotfiles/Library/Keyboard\ Layouts/fi-unkhz-mac.keylayout ~/Library/Keyboard\ Layouts/
+
+  # Repair keyhold feature
+  defaults write -g ApplePressAndHoldEnabled -bool false
 fi
