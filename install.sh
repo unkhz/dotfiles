@@ -1,7 +1,7 @@
 #! /bin/bash
 
-dotfiles="$(dirname $0)"
-lnopts='-s'
+dotfiles=$(cd $(dirname $0) && pwd)
+lnopts="-s"
 
 while getopts hf OPTION
 do
@@ -11,14 +11,25 @@ do
        exit 0
        ;;
     f) echo "Removing existing files before linking"
-       lnopts= '-fs'
+       lnopts="-fs"
       ;;
   esac
 done
 
+# oh-my-zsh
+if [ ! -d ~/.oh-my-zsh ]; then
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+fi
+
+# nvm
+if [ ! -d ~/.nvm ]; then
+  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+fi
+
 ln $lnopts $dotfiles/.vimrc ~
 ln $lnopts $dotfiles/.vim ~
 ln $lnopts $dotfiles/.bashrc ~
+ln $lnopts $dotfiles/.zshrc ~
 ln $lnopts $dotfiles/.profile ~
 ln $lnopts $dotfiles/.path ~
 ln $lnopts $dotfiles/.slate ~
