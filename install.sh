@@ -49,3 +49,9 @@ if [ -d ~/Library ]; then
   # Repair keyhold feature
   defaults write -g ApplePressAndHoldEnabled -bool false
 fi
+
+
+#settings
+git config --global user.name "Juhani Pelli"
+git config --global user.email "juhani.pelli@gmail.com"
+git config --global merge.tool opendiff
