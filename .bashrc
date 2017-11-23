@@ -89,6 +89,13 @@ alias ll='ls -AlF'
 alias la='ls -A'
 alias l='ls -CF'
 
+# git
+git-checkout-and-reset() {
+  git fetch && git checkout $1 && git reset --hard origin/$1 && git rebase origin/master
+}
+alias git-cr=git-checkout-and-reset
+alias git-delete-merged-branches=git branch --merged | egrep -v "(^\*|local)" | xargs git branch -d
+
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
