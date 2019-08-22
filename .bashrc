@@ -91,7 +91,20 @@ alias l='ls -CF'
 
 # git
 git-checkout-and-reset() {
-  git fetch && git checkout $1 && git reset --hard origin/$1 && git rebase origin/master
+  echo "✔️ Fetch.."
+  git fetch
+  echo
+  echo "✔️ Stash.."
+  git stash
+  echo
+  echo "✔️ Checkout.."
+  git checkout $1
+  echo
+  echo "✔️ Reset.."
+  git reset --hard origin/$1
+  echo
+  echo "✔️ Rebase.."
+  git rebase origin/master
 }
 alias git-cr=git-checkout-and-reset
 alias git-delete-merged-branches=git branch --merged | egrep -v "(^\*|local)" | xargs git branch -d
