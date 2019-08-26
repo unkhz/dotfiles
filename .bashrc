@@ -90,23 +90,18 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # git
-git-checkout-and-reset() {
-  echo "✔️ Fetch.."
-  git fetch
-  echo
-  echo "✔️ Stash.."
-  git stash
-  echo
-  echo "✔️ Checkout.."
-  git checkout $1
-  echo
-  echo "✔️ Reset.."
-  git reset --hard origin/$1
-  echo
-  echo "✔️ Rebase.."
-  git rebase origin/master
-}
-alias git-cr=git-checkout-and-reset
+git config --global alias.jump '!jump() { echo "➡️  Fetch"; \
+git fetch; \
+echo "➡️  Stash"; \
+git stash; \
+echo "➡️  Checkout"; \
+git checkout $1; \
+echo "➡️  Reset"; \
+git reset --hard origin/$1; \
+echo "➡️  Rebase on master"; \
+git rebase origin/master; \
+}; jump';
+alias git-cr="git jump $@"
 alias git-delete-merged-branches=git branch --merged | egrep -v "(^\*|local)" | xargs git branch -d
 
 # Add an "alert" alias for long running commands.  Use like so:
