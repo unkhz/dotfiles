@@ -90,17 +90,17 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # git
-git config --global alias.jump '!jump() { echo "➡️  Fetch"; \
+git config --global alias.jump '!__jump() { echo "➡️  Fetch"; \
 git fetch; \
 echo "➡️  Stash"; \
-git stash; \
+git stash --include-untracked; \
 echo "➡️  Checkout"; \
 git checkout $1; \
 echo "➡️  Reset"; \
 git reset --hard origin/$1; \
 echo "➡️  Rebase on master"; \
 git rebase origin/master; \
-}; jump';
+}; __jump';
 alias git-cr="git jump $@"
 alias git-delete-merged-branches=git branch --merged | egrep -v "(^\*|local)" | xargs git branch -d
 
