@@ -33,6 +33,8 @@ ln $lnopts $dotfiles/.zshrc ~
 ln $lnopts $dotfiles/.profile ~
 ln $lnopts $dotfiles/.path ~
 ln $lnopts $dotfiles/.slate ~
+mkdir -p ~/.config/karabiner/assets/complex_modifications
+ln $lnopts $dotfiles/.config/karabiner/assets/complex_modifications/unkhz.json ~/.config/karabiner/assets/complex_modifications/unkhz.json
 
 if [ -f ~/.ssh/authorized_keys ]; then
   cat ~/.ssh/authorized_keys $dotfiles/.ssh/authorized_keys | uniq > ~/.ssh/authorized_keys
