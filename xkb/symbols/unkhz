@@ -1,0 +1,61 @@
+default partial alphanumeric_keys
+xkb_symbols "unkhz" {
+    name[Group1]="unkhz";
+    include "pc+us+inet(evdev)"
+
+    key <TLDE> { [grave, asciitilde, NoSymbol, NoSymbol] };
+    key <AE01> { [1, exclam, exclamdown, NoSymbol] };
+    key <AE02> { [2, at, at, at, at] };
+    key <AE03> { [3, numbersign, sterling, guillemotright] };
+    key <AE04> { [4, dollar, EuroSign, guillemotleft] };
+    key <AE05> { [5, percent, permille, leftdoublequotemark] };
+    key <AE06> { [6, ampersand, paragraph, rightdoublequotemark] };
+    key <AE07> { [7, slash, braceleft, NoSymbol] };
+    key <AE08> { [8, parenleft, bracketleft, less] };
+    key <AE09> { [9, parenright, bracketright, greater] };
+    key <AE10> { [0, equal, braceright, degree] };
+    key <AE11> { [minus, underscore, backslash, plusminus] };
+    key <AE12> { [plus, asciicircum, asciitilde, acute] };
+
+    key <AD02> { [w, W, w, W] };
+    key <AD03> { [e, E, EuroSign, cent] };
+    key <AD04> { [r, R, registered, NoSymbol] };
+    key <AD05> { [t, T, thorn, THORN] };
+    key <AD06> { [y, Y, y, Y] };
+    key <AD07> { [u, U, u, U] };
+    key <AD08> { [i, I, idotless, bar] };
+    key <AD09> { [o, O, oaring, Aring] };
+    key <AD10> { [p, P, paragraph, NoSymbol] };
+    key <AD11> { [bracketleft, braceleft, degree] };
+    key <AD12> { [bracketright, bracerigth, asciicircum, diaeresis] };
+
+    key <AC01> { [a, A, schwa, SCHWA] };
+    key <AC02> { [s, S, scaron, Scaron] };
+    key <AC03> { [d, D, eth, ETH] };
+    key <AC04> { [f, F, f, F] };
+    key <AC05> { [g, G, eng, ENG] };
+    key <AC06> { [h, H, h, H] };
+    key <AC07> { [j, J, j, J] };
+    key <AC08> { [k, K, kra, dead_greek] };
+    key <AC09> { [l, L, dead_stroke, dead_currency] };
+    key <AC10> { [odiaeresis, Odiaeresis, oslash, Oslash] };
+    key <AC11> { [adiaeresis, Adiaeresis, ae, AE] };
+    key <BKSL> { [apostrophe, quotedbl, asterisk, multiply] };
+
+    key <LSGT> { [less, greater, bar, brokenbar] };
+    key <AB01> { [z, Z, zcaron, Zcaron] };
+    key <AB02> { [x, X, multiply, division] };
+    key <AB03> { [c, C, copyright, cent] };
+    key <AB04> { [v, V, v, V] };
+    key <AB05> { [b, B, ssharp, U1E9E] };
+    key <AB06> { [n, N, ntilde, Ntilde] };
+    key <AB07> { [m, M, mu, NoSymbol] };
+    key <AB08> { [comma, semicolon, cedilla, ogonek] };
+    key <AB09> { [period, colon, periodcentered, notsign] };
+    key <AB10> { [slash, question, bar, questiondown] };
+
+    key <SPCE> { [space, space, space, space] };
+
+
+    include "level3(ralt_switch)"
+};
