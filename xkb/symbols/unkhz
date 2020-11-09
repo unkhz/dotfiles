@@ -36,8 +36,8 @@ xkb_symbols "unkhz" {
     key <AC05> { [g, G, eng, ENG] };
     key <AC06> { [h, H, h, H] };
     key <AC07> { [j, J, j, J] };
-    key <AC08> { [k, K, kra, dead_greek] };
-    key <AC09> { [l, L, dead_stroke, dead_currency] };
+    key <AC08> { [k, K, kra] };
+    key <AC09> { [l, L] };
     key <AC10> { [odiaeresis, Odiaeresis, oslash, Oslash] };
     key <AC11> { [adiaeresis, Adiaeresis, ae, AE] };
     key <BKSL> { [apostrophe, quotedbl, asterisk, multiply] };
