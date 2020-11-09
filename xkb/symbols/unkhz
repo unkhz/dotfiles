@@ -27,7 +27,7 @@ xkb_symbols "unkhz" {
     key <AD09> { [o, O, oaring, Aring] };
     key <AD10> { [p, P, paragraph, NoSymbol] };
     key <AD11> { [bracketleft, braceleft, degree] };
-    key <AD12> { [bracketright, bracerigth, asciicircum, diaeresis] };
+    key <AD12> { [bracketright, braceright, asciicircum, diaeresis] };
 
     key <AC01> { [a, A, schwa, SCHWA] };
     key <AC02> { [s, S, scaron, Scaron] };
