@@ -18,12 +18,12 @@ done
 
 # oh-my-zsh
 if [ ! -d ~/.oh-my-zsh ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
 # nvm
 if [ ! -d ~/.nvm ]; then
-  curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.0/install.sh | bash
 fi
 
 ln $lnopts $dotfiles/.vimrc ~
@@ -32,15 +32,12 @@ ln $lnopts $dotfiles/.bashrc ~
 ln $lnopts $dotfiles/.zshrc ~
 ln $lnopts $dotfiles/.profile ~
 ln $lnopts $dotfiles/.path ~
-ln $lnopts $dotfiles/.slate ~
-mkdir -p ~/.config/karabiner/assets/complex_modifications
-ln $lnopts $dotfiles/.config/karabiner/assets/complex_modifications/unkhz.json ~/.config/karabiner/assets/complex_modifications/unkhz.json
-
-if [ -f ~/.ssh/authorized_keys ]; then
-  cat ~/.ssh/authorized_keys $dotfiles/.ssh/authorized_keys | uniq > ~/.ssh/authorized_keys
-fi
 
 if [ -d ~/Library ]; then
+  ln $lnopts $dotfiles/.slate ~
+  mkdir -p ~/.config/karabiner/assets/complex_modifications
+  ln $lnopts $dotfiles/.config/karabiner/assets/complex_modifications/unkhz.json ~/.config/karabiner/assets/complex_modifications/unkhz.json
+
   # Make fn-left and fn-right properly jump to start and end of line
   mkdir -p ~/Library/KeyBindings
   cp -a $dotfiles/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings/
