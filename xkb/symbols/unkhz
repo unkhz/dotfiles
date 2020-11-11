@@ -3,9 +3,9 @@ xkb_symbols "unkhz" {
     name[Group1]="unkhz";
     include "pc+us+inet(evdev)"
 
-    key <TLDE> { [grave, asciitilde, NoSymbol, NoSymbol] };
-    key <AE01> { [1, exclam, exclamdown, NoSymbol] };
-    key <AE02> { [2, at, at, at, at] };
+    key <TLDE> { [grave, asciitilde, section, NoSymbol] };
+    key <AE01> { [1, exclam, exclamdown, onesuperior] };
+    key <AE02> { [2, at, at, at, twosuperior] };
     key <AE03> { [3, numbersign, sterling, guillemotright] };
     key <AE04> { [4, dollar, EuroSign, guillemotleft] };
     key <AE05> { [5, percent, permille, leftdoublequotemark] };
