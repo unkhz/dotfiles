@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # console
-localectl set-keymap --no-convert /home/unkhz/.dotfiles/xkb.kbd/unkhz.map
+localectl set-keymap --no-convert $HOME/.dotfiles/xkb/kbd/unkhz.map
 
 # xorg
 sudo mkdir -p /usr/share/X11/xkb/symbols
