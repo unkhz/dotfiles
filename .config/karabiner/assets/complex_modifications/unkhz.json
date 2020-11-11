@@ -2,7 +2,7 @@
   "title": "unkhz custom rules",
   "rules": [
     {
-      "description": "Change Caps Lock + I/J/K/L to Arrow Keys & Escape if pressed alone",
+      "description": "Capslock activates hijklö navigation + backspace delete + escape if pressed alone",
       "manipulators": [
         {
           "from": {"key_code": "caps_lock", "modifiers": {"optional": ["any"]}},
@@ -45,6 +45,12 @@
           "conditions": [{"name": "caps_arrows_mode", "type": "variable_if", "value": 1}],
           "from": {"key_code": "h", "modifiers": {"optional": ["any"]}},
           "to": [{"key_code": "home"}],
+          "type": "basic"
+        },
+        {
+          "conditions": [{"name": "caps_arrows_mode", "type": "variable_if", "value": 1}],
+          "from": {"key_code": "delete_or_backspace", "modifiers": {"optional": ["any"]}},
+          "to": [{"key_code": "delete_forward"}],
           "type": "basic"
         }
       ]
