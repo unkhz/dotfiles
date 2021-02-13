@@ -35,6 +35,10 @@ ln $lnopts $dotfiles/.path ~
 
 if [ -d ~/Library ]; then
   ln $lnopts $dotfiles/.slate ~
+
+  mkdir -p ~/.hammerspoon
+  ln $lnopts $dotfiles/.hammerspoon ~/.hammerspoon
+
   mkdir -p ~/.config/karabiner/assets/complex_modifications
   ln $lnopts $dotfiles/.config/karabiner/assets/complex_modifications/unkhz.json ~/.config/karabiner/assets/complex_modifications/unkhz.json
 
