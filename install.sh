@@ -32,6 +32,7 @@ ln $lnopts $dotfiles/.bashrc ~
 ln $lnopts $dotfiles/.zshrc ~
 ln $lnopts $dotfiles/.profile ~
 ln $lnopts $dotfiles/.path ~
+ln $lnopts $dotfiles/bin ~
 
 if [ -d ~/Library ]; then
   ln $lnopts $dotfiles/.slate ~

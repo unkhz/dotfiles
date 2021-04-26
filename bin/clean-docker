@@ -1,0 +1,14 @@
+#!/bin/bash
+# Strict mode http://redsymbol.net/articles/unofficial-bash-strict-mode/
+set -euo pipefail
+IFS=$'\n\t'
+
+echo "Stopping and removing all containers"
+docker ps -aq | xargs docker stop
+docker ps -aq | xargs docker rm
+
+echo "Removing all images"
+docker images -aq | xargs docker rmi
+
+echo "Pruning system"
+echo "y" | docker system prune
