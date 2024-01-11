@@ -65,16 +65,19 @@ alias la='ls -A'
 alias l='ls -CF'
 
 # git
-git config --global alias.jump '!__jump() { echo "➡️  Fetch"; \
-git fetch; \
-echo "➡️  Stash"; \
-git stash --include-untracked; \
-echo "➡️  Checkout"; \
-git checkout $1; \
-echo "➡️  Reset"; \
-git reset --hard origin/$1; \
-echo "➡️  Rebase on master"; \
-git rebase origin/master; \
+git config --global alias.jump '!__jump() { \
+    echo "➡️  Fetch"; \
+    git fetch; \
+    echo "➡️  Stash"; \
+    git stash --include-untracked; \
+    echo "➡️  Checkout $1"; \
+    git checkout $1; \
+    upstream_branch=$(git rev-parse --abbrev-ref --symbolic-full-name @{u}); \
+    echo "➡️  Reset to $upstream_branch"; \
+    git reset --hard "$upstream_branch"; \
+    default_branch=$(git symbolic-ref refs/remotes/origin/HEAD --short); \
+    echo "➡️  Rebase onto $default_branch"; \
+    git rebase "$default_branch"; \
 }; __jump';
 alias git-cr="git jump $@"
 alias git-delete-merged-branches='git branch --merged | egrep -v "(^\*|local)" | xargs git branch -d'
