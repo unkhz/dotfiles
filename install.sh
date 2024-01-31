@@ -35,6 +35,9 @@ ln $lnopts $dotfiles/.path ~
 ln $lnopts $dotfiles/bin ~
 
 if [ -d ~/Library ]; then
+  mkdir -p ~/Library/Application\ Support/lazygit
+  ln $lnopts $dotfiles/.lazygit/config.yml ~/Library/Application\ Support/lazygit/config.yml
+
   ln $lnopts $dotfiles/.slate ~
 
   ln $lnopts $dotfiles/.hammerspoon ~
@@ -51,10 +54,16 @@ if [ -d ~/Library ]; then
 
   # Repair keyhold feature
   defaults write -g ApplePressAndHoldEnabled -bool false
+
+  # Install Homebrew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  # Install Homebrew packages
+  brew install lazygit
+  brew install git-delta
 fi
 
-
-#settings
+# Git settings
 git config --global user.name "Juhani Pelli"
 git config --global user.email "juhani.pelli@gmail.com"
-git config --global merge.tool opendiff
+git config --global core.pager delta
