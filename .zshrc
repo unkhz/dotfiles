@@ -58,7 +58,6 @@ source $ZSH/oh-my-zsh.sh
 # overwrite oh-my-zsh defaults
 source ~/.profile
 
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -87,3 +86,8 @@ source ~/.profile
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Alias definitions specific to zsh shell
+if [ -f ~/.zsh_aliases ]; then
+    . ~/.zsh_aliases
+fi
