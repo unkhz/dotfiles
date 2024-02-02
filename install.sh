@@ -33,7 +33,7 @@ ln $lnopts $dotfiles/.zshrc ~
 ln $lnopts $dotfiles/.profile ~
 ln $lnopts $dotfiles/.path ~
 ln $lnopts $dotfiles/bin ~
-ln $lnopts $dotfiles/.oh-my-zsh/custom/themes ~/.oh-my-zsh/custom
+ln $lnopts $dotfiles/.oh-my-zsh/custom/themes/unkhz.zsh-theme ~/.oh-my-zsh/custom/themes
 
 if [ -d ~/Library ]; then
   mkdir -p ~/Library/Application\ Support/lazygit
