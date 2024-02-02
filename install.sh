@@ -3,16 +3,17 @@
 dotfiles=$(cd $(dirname $0) && pwd)
 lnopts="-s"
 
-while getopts hf OPTION
-do
+while getopts hf OPTION; do
   case $OPTION in
-    h) echo "Usage: install.sh"
-       echo "-f Remove existing files before linking"
-       exit 0
-       ;;
-    f) echo "Removing existing files before linking"
-       lnopts="-fs"
-      ;;
+  h)
+    echo "Usage: install.sh"
+    echo "-f Remove existing files before linking"
+    exit 0
+    ;;
+  f)
+    echo "Removing existing files before linking"
+    lnopts="-fs"
+    ;;
   esac
 done
 
