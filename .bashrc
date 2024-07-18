@@ -17,7 +17,7 @@ HISTSIZE=1000
 HISTFILESIZE=2000
 
 # bash only stuff
-if [ -n "$BASH_VERSION" ]; then
+if [ -n "$BASH_VERSION" ] && [ -z "$ZSH_VERSION" ]; then
 
     # check the window size after each command and, if necessary,
     # update the values of LINES and COLUMNS.
@@ -50,6 +50,14 @@ if [ -n "$BASH_VERSION" ]; then
         color_prompt=
         fi
     fi
+
+    # enable programmable completion features (you don't need to enable
+    # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+    # sources /etc/bash.bashrc).
+    if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+        . /etc/bash_completion
+    fi
+
 fi
 
 # enable color support of ls and also add handy aliases
@@ -93,11 +101,4 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
 fi
