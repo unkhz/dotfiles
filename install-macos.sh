@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# Unofficial bash strict mode
+set -euo pipefail
+IFS=$'\n\t'
+
 if [ -d ~/Library ]; then
   echo "🚀 Installing nvm"
   if [ ! -d ~/.nvm ]; then

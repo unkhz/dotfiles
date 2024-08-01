@@ -1,5 +1,9 @@
 #! /bin/bash
 
+# Unofficial bash strict mode
+set -euo pipefail
+IFS=$'\n\t'
+
 dotfiles=$(cd $(dirname $0) && pwd)
 lnopts="-s"
 

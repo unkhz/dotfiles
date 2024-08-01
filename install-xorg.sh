@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Unofficial bash strict mode
+set -euo pipefail
+IFS=$'\n\t'
+
 # console
 localectl set-keymap --no-convert $HOME/.dotfiles/xkb/kbd/unkhz.map
 
