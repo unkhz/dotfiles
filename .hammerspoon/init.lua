@@ -10,6 +10,8 @@ local function resizeWindow(xr, wr)
   win:setFrame(f, 0)
 end
 
+local log = hs.logger.new('CycleSizes', 'debug')
+
 local function cycleSizes(sizes, direction)
   local win = hs.window.focusedWindow()
   if not win then return end
@@ -17,33 +19,50 @@ local function cycleSizes(sizes, direction)
   local currentFrame = win:frame()
   local screenFrame = win:screen():frame()
 
-  -- Calculate current relative size
-  local currentXr = (currentFrame.x - screenFrame.x) / screenFrame.w
-  local currentWr = currentFrame.w / screenFrame.w
+  -- Calculate current relative size and center point
+  local windowCenterXr = (currentFrame.x + currentFrame.w / 2 - screenFrame.x) / screenFrame.w
+  local windowWr = currentFrame.w / screenFrame.w
 
-  local log = hs.logger.new('CycleSizes', 'info')
-  log.i("Current xr:", currentXr, "Current wr:", currentWr)
+  log.i("Current xr:", windowCenterXr, "Current wr:", windowWr)
 
-  -- Find the current size index in the cycle
-  local currentIndex
+  -- Find the closest size index in the cycle
+  local closestIndex
+  local smallestDiff = math.huge
   for i, size in ipairs(sizes) do
-      if math.abs(currentXr - size[1]) < 0.01 and math.abs(currentWr - size[2]) < 0.01 then
-          currentIndex = i
-          break
+      local targetXr = size[1]
+      local targetWr = size[2]
+      local targetCenterXr = targetXr + (targetWr / 2)
+
+      -- The calculation of diff as the sum of the center position difference
+      -- and the width difference is a simplification that serves as a
+      -- reasonable approximation for overall similarity
+      local diff = math.abs(windowCenterXr - targetCenterXr) + math.abs(windowWr - targetWr)
+
+      if diff < smallestDiff then
+          smallestDiff = diff
+          closestIndex = i
       end
   end
 
-  -- If current size not found in list, use the first or last size based on direction
-  if not currentIndex then
-      currentIndex = direction > 0 and 0 or #sizes + 1
+  -- Determine the next index
+  local nextIndex
+  if smallestDiff > 0.01 then
+      -- Align to the closest size if the window is not exactly there (+/- 1%)
+      nextIndex = closestIndex
+  else
+      if direction == 1 then
+        nextIndex = closestIndex % #sizes + 1
+      else
+        nextIndex = (closestIndex - 2 + #sizes) % #sizes + 1
+      end
   end
 
-  -- Calculate the next index based on direction
-  local nextIndex = ((currentIndex - 1 + direction) % #sizes) + 1
-  local nextSize = sizes[nextIndex]
-
   -- Apply the new size
-  resizeWindow(nextSize[1], nextSize[2])
+  local newSize = sizes[nextIndex]
+  win:move({x = screenFrame.x + newSize[1] * screenFrame.w,
+            y = screenFrame.y,
+            w = newSize[2] * screenFrame.w,
+            h = screenFrame.h})
 end
 
 
