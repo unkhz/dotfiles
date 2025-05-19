@@ -48,6 +48,17 @@ findClosestIndex(wx, ww, sx, sw) {
     return idx
 }
 
+moveWindow(x, y, w, h, win := 'A', mon := '') {
+    WinRestore('A')
+    if mon {
+        left := top := right := bottom := 0
+        MonitorGet(mon, &left, &top, &right, &bottom)
+        x := left + x
+        y := top + y
+    }
+    WinMove x, y, w, h, win
+}
+
 cycleSizes(direction) {
     info := getScreenInfo()
     idx := findClosestIndex(info.wx, info.ww, info.sx, info.sw)
@@ -71,7 +82,7 @@ cycleSizes(direction) {
     y := info.sy
     w := s[2] * info.sw
     h := info.sh
-    WinMove x, y, w, h, 'A'
+    moveWindow(x - info.sx, y - info.sy, w, h, 'A')
 }
 
 moveToNextScreen() {
@@ -83,12 +94,10 @@ moveToNextScreen() {
     if nextMon > count {
         nextMon := 1
     }
-    left := top := right := bottom := 0
-    MonitorGet(nextMon, &left, &top, &right, &bottom)
-    WinMove left, top, ww, wh, winID
+    moveWindow(0, 0, ww, wh, winID, nextMon)
 }
 
 ^!Left:: cycleSizes(-1)
 ^!Right:: cycleSizes(1)
-^!Up:: WinMove 0, 0, A_ScreenWidth, A_ScreenHeight, 'A'
+^!Up:: WinMaximize('A')
 ^!Down:: moveToNextScreen()
