@@ -88,7 +88,7 @@ moveToNextScreen() {
     WinMove left, top, ww, wh, winID
 }
 
-^#Left:: cycleSizes(-1)
-^#Right:: cycleSizes(1)
-^#Up:: WinMove 0, 0, A_ScreenWidth, A_ScreenHeight, 'A'
-^#Down:: moveToNextScreen()
+^!Left:: cycleSizes(-1)
+^!Right:: cycleSizes(1)
+^!Up:: WinMove 0, 0, A_ScreenWidth, A_ScreenHeight, 'A'
+^!Down:: moveToNextScreen()
