@@ -6,17 +6,23 @@ ProcessSetPriority "High"
 ; Set capslock navigation
 SetCapsLockState "AlwaysOff"
 
-CapsLock::Escape
-
+; Avoid triggering Windows keydown combos like Ctrl-Shift-Esc and Ctrl-Alt-Esc
+CapsLock:: {
+	KeyWait "CapsLock"
+	Send "{Esc}"
+}
+; Navigate
 CapsLock & i::Up
 CapsLock & j::Left
 CapsLock & k::Down
 CapsLock & l::Right
 CapsLock & h::Home
 CapsLock & SC0027::End
+
+; Edit
 CapsLock & BackSpace::Delete
-CapsLock & Space:: {
-	Click "Down"
-	KeyWait "Space"
-	Click "Up"
-}
+CapsLock & s::^s
+CapsLock & z::^z
+CapsLock & x::^x
+CapsLock & c::^c
+CapsLock & v::^v
