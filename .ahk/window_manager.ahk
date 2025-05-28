@@ -1,3 +1,4 @@
+#Requires AutoHotkey v2.0 AutoHotkey v2.0
 #SingleInstance Force
 SendMode "Input"
 SetWorkingDir A_ScriptDir
@@ -101,3 +102,31 @@ moveToNextScreen() {
 ^!Right:: cycleSizes(1)
 ^!Up:: WinMaximize('A')
 ^!Down:: moveToNextScreen()
+
+
+;Cycle App Windows
+cycleWindows() {
+    activeWin := WinGetID("A")
+    activePID := WinGetPID("A")
+    winList := []
+    activeWinIndex := 1
+    for win in WinGetList() {
+        pid := WinGetPID(win)
+        if pid == activePID {
+            winList.Push(win)
+            if activeWin == win {
+                activeWinIndex := winList.Length
+            }
+        }
+    }
+
+    if winList.Length > 1 {
+        nextIndex := 1
+        if activeWinIndex < winList.Length {
+            nextIndex := activeWinIndex + 1
+        }
+        WinActivate(winList[nextIndex])
+    }
+}
+
+!`:: cycleWindows()
