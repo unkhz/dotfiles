@@ -11,6 +11,7 @@ CapsLock:: {
 	KeyWait "CapsLock"
 	Send "{Esc}"
 }
+
 ; Navigate
 CapsLock & i::Up
 CapsLock & j::Left
@@ -18,6 +19,10 @@ CapsLock & k::Down
 CapsLock & l::Right
 CapsLock & h::Home
 CapsLock & SC0027::End
+CapsLock & u::^Home
+CapsLock & m::^End
+CapsLock & o::PgUp
+CapsLock & .::PgDn
 
 ; Edit
 CapsLock & BackSpace::Delete
