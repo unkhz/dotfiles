@@ -4,10 +4,11 @@ SendMode "Input"
 SetWorkingDir A_ScriptDir
 
 ; List of window sizes (relative to screen width)
-sizes := [[0, 0.25], [0, 0.33], [0, 0.50], [0, 0.67], [0, 0.75], [0, 1], [0.25, 0.75], [0.33, 0.66], [0.50, 0.50], [0.67, 0.33], [0.75, 0.25]]
+largeScreenWindowSizes := [[0, 0.25], [0, 0.333], [0, 0.50], [0, 0.667], [0, 0.75], [0, 1], [0.25, 0.75], [0.333, 0.667], [0.50, 0.50], [0.667, 0.333], [0.75, 0.25]]
+smallScreenWindowSizes := [[0, 0.333], [0, 0.50], [0, 0.667], [0, 1], [0.333, 0.667], [0.50, 0.50], [0.667, 0.333]]
 
 getMonitorFromWindow(win := 'A') {
-    WinGetPos &wx, &wy, &ww, &wh, win
+    WinGetPos(&wx, &wy, &ww, &wh, win)
     count := MonitorGetCount()
     Loop count {
         MonitorGetWorkArea(A_Index, &left, &top, &right, &bottom)
@@ -20,7 +21,7 @@ getMonitorFromWindow(win := 'A') {
     return 1 ; fallback to primary monitor
 }
 
-getScreenInfo(mon) {
+getScreenInfo(mon := getMonitorFromWindow()) {
     left := top := right := bottom := 0
     MonitorGetWorkArea(mon, &left, &top, &right, &bottom)
     return { x: left, y: top, w: right - left, h: bottom }
@@ -32,12 +33,22 @@ getWindowInfo(win := 'A') {
     return { x: wx, y: wy, w: ww, h: wh }
 }
 
+getWindowSizes() {
+    screen := getScreenInfo()
+    if (screen.w > 2048) {
+        return largeScreenWindowSizes
+    } else {
+        return smallScreenWindowSizes
+    }
+}
+
 findClosestIndex(wx, ww, sx, sw) {
     minDiff := 1e9
     idx := 1
     winCenterXr := (wx + ww / 2 - sx) / sw
     winWr := ww / sw
-    for i, size in sizes {
+    windowSizes := getWindowSizes()
+    for i, size in windowSizes {
         targetXr := size[1]
         targetWr := size[2]
         targetCenterXr := targetXr + (targetWr / 2)
@@ -51,26 +62,24 @@ findClosestIndex(wx, ww, sx, sw) {
 }
 
 moveWindowRelativeToMonitor(x, y, w, h, win := 'A', mon := getMonitorFromWindow('A')) {
-    left := top := right := bottom := 0
-    MonitorGetWorkArea(mon, &left, &top, &right, &bottom)
-    nx := left + x
-    ny := top + y
-    WinMove(Floor(nx), Ceil(ny), Floor(w), Ceil(h), win)
+    screen := getScreenInfo(mon)
+    WinMove(screen.x + x, screen.y + y, w, h, win)
 }
 
 cycleSizes(direction) {
     winID := WinGetID('A')
-    minmax := WinGetMinMax(winID)
-    if (minmax == 1) {
+    minMax := WinGetMinMax(winID)
+    if (minMax == 1) {
         WinRestore(winID)
     }
     mon := getMonitorFromWindow(winID)
-    s := getScreenInfo(mon)
-    w := getWindowInfo()
-    idx := findClosestIndex(w.x, w.w, s.x, s.w)
-    winCenterXr := (w.x + w.w / 2 - s.x) / s.w
-    winWr := w.w / s.w
-    size := sizes[idx]
+    screen := getScreenInfo(mon)
+    win := getWindowInfo()
+    idx := findClosestIndex(win.x, win.w, screen.x, screen.w)
+    winCenterXr := (win.x + win.w / 2 - screen.x) / screen.w
+    winWr := win.w / screen.w
+    windowSizes := getWindowSizes()
+    size := windowSizes[idx]
     targetCenterXr := size[1] + (size[2] / 2)
     targetWr := size[2]
     diff := Abs(winCenterXr - targetCenterXr) + Abs(winWr - targetWr)
@@ -78,51 +87,50 @@ cycleSizes(direction) {
         nextIdx := idx
     } else {
         if direction > 0 {
-            nextIdx := Mod(idx, sizes.Length) + 1
+            nextIdx := Mod(idx, windowSizes.Length) + 1
         } else {
-            nextIdx := Mod(idx - 2 + sizes.Length, sizes.Length) + 1
+            nextIdx := Mod(idx - 2 + windowSizes.Length, windowSizes.Length) + 1
         }
     }
-    newsize := sizes[nextIdx]
-    x := s.x + newsize[1] * s.w
-    y := s.y
-    w := newsize[2] * s.w
-    h := s.h
-    moveWindowRelativeToMonitor(x - s.x, y - s.y, w, h)
+    nextSize := windowSizes[nextIdx]
+    moveWindowRelativeToMonitor(nextSize[1] * screen.w, 0, nextSize[2] * screen.w, screen.h)
 }
 
 moveToNextScreen() {
     winID := WinGetID('A')
-    minmax := WinGetMinMax('A')
-    if (minmax == 1) {
+    minMax := WinGetMinMax('A')
+    if (minMax == 1) {
         WinRestore(winID) ; restore size so that it's kept across screens
     }
 
-    count := MonitorGetCount()
+    monCount := MonitorGetCount()
     WinGetPos(&wx, &wy, &ww, &wh, winID)
     curMon := getMonitorFromWindow(winID)
     nextMon := curMon + 1
-    if nextMon > count {
+    if nextMon > monCount {
         nextMon := 1
     }
-    w := getWindowInfo(winID)
-    cs := getScreenInfo(curMon)
-    ns := getScreenInfo(nextMon)
-    rw := ns.w / cs.w
-    rh := ns.h / cs.h
-    nx := (w.x - cs.x) * rw
-    ny := (w.y - cs.y) * rh
-    nw := w.w * rw
-    nh := w.h * rh 
-    moveWindowRelativeToMonitor(nx, ny, nw, nh, winID, nextMon)
-    if (minmax == 1){
+    
+    win := getWindowInfo(winID)
+    currentScreen := getScreenInfo(curMon)
+    nextScreen := getScreenInfo(nextMon)
+    ratio := { w: nextScreen.w / currentScreen.w, h: nextScreen.h / currentScreen.h }
+    moveWindowRelativeToMonitor(
+        (win.x - currentScreen.x) * ratio.w,
+        (win.y - currentScreen.y) * ratio.h,
+        win.w * ratio.w, win.h * ratio.h,
+        winID,
+        nextMon
+    )
+
+    if (minMax == 1) {
         WinMaximize('A')
     }
 }
 
 toggleMinMax() {
-    minmax := WinGetMinMax('A')
-    if (minmax == 1) {
+    minMax := WinGetMinMax('A')
+    if (minMax == 1) {
         WinRestore('A')
     } else {
         WinMaximize('A')
