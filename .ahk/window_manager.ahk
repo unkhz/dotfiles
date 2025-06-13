@@ -120,11 +120,19 @@ moveToNextScreen() {
     }
 }
 
+toggleMinMax() {
+    minmax := WinGetMinMax('A')
+    if (minmax == 1) {
+        WinRestore('A')
+    } else {
+        WinMaximize('A')
+    }
+}
 
 
 ^!Left:: cycleSizes(-1)
 ^!Right:: cycleSizes(1)
-^!Up:: WinMaximize('A')
+^!Up:: toggleMinMax()
 ^!Down:: moveToNextScreen()
 
 
