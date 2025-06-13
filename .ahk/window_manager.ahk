@@ -23,7 +23,7 @@ getScreenInfo() {
     WinGetPos &wx, &wy, &ww, &wh, 'A'
     mon := getMonitorFromWindow('A')
     left := top := right := bottom := 0
-    MonitorGet(mon, &left, &top, &right, &bottom)
+    MonitorGetWorkArea(mon, &left, &top, &right, &bottom)
     sx := left
     sy := top
     sw := right - left
